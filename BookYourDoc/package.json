@@ -1,0 +1,29 @@
+{
+  "name": "bookyourdoc",
+  "version": "1.0.0",
+  "description": "BookYourDoc is a WebApp for a fake hospital. Through this application the user/patient can book a doctor's appointment at a perticulat date and time.",
+  "main": "app.js",
+  "scripts": {
+    "build": "babel src -d dist",
+    "nodemon": "~/.npm-global/bin/nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shashank8907/HMS-m07.git"
+  },
+  "author": "SmoothOperators",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shashank8907/HMS-m07/issues"
+  },
+  "homepage": "https://github.com/shashank8907/HMS-m07#readme",
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.14",
+    "pug": "^2.0.3"
+  }
+}
