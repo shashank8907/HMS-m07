@@ -10,8 +10,13 @@ var express = require('express');
 
 //Bring in models
 
+
+
+//Model for patients
+var patients = require('./model/patient'); //patients is now our object that we use to retrieve or add to in mlab
+
 //Model for username and password 
-var UserLog = require('./model/users');
+// var UserLog = require('./model/users');
 
 //model for url
 // var UserUrl = require('./model/urls');
@@ -35,7 +40,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 //We are connecting to our db -- milestone is our db and in that we are creating two collections users and urls
-mongoose.connect('mongodb://localhost/milestone');
+mongoose.connect('mongodb://shashank:shashank1@ds125574.mlab.com:25574/hospital_management_system');
 //Getting the object of connection
 var db = mongoose.connection;
 
@@ -52,11 +57,21 @@ db.on('error', function (err) {
 
 //Route to our main page  
 app.get('/', function (req, res) {
-    res.render("index",{
-        text:"Hello World"
-    })
+    patients.find({}, function (err, data) {
+        if (err) {
+            console.log('error occured while featching data- url, title,');
+            console.log(err);
+        }
+        //By now we get all thwe objects of UserUrl
+        //We pass that as a whole to our index page and iterate from there kapish?
+        else {
+            console.log(data);
+            res.render('index', {
+                data: data
+            });
+        }
+    });
 });
-
 
 
 
