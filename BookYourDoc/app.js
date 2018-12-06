@@ -57,43 +57,11 @@ db.on('error', function (err) {
 
 //Route to our main page  
 app.get('/', function (req, res) {
-    patients.find({}, function (err, data) {
-        if (err) {
-            console.log('error occured while featching data- url, title,');
-            console.log(err);
-        }
-        //By now we get all thwe objects of UserUrl
-        //We pass that as a whole to our index page and iterate from there kapish?
-        else {
-            console.log(data);
-            
-        }
-    });
-    appointment.find({}, function (err, data) {
-        if (err) {
-            console.log('error occured while featching data- url, title,');
-            console.log(err);
-        }
-        //By now we get all thwe objects of UserUrl
-        //We pass that as a whole to our index page and iterate from there kapish?
-        else {
-            console.log(data);
-            
-        }
-    });
-    doctor.find({}, function (err, data) {
-        if (err) {
-            console.log('error occured while featching data- url, title,');
-            console.log(err);
-        }
-        //By now we get all thwe objects of UserUrl
-        //We pass that as a whole to our index page and iterate from there kapish?
-        else {
-            console.log(data);
-            
-        }
-    });
-    
+    res.render("index");
+});
+//Rout for regLogin
+app.get('/regAndFirstuser', function (req, res) {
+    res.render("regAndFirstuser");
 });
 
 //Here we include port that we want our application to run on 
