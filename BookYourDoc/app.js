@@ -60,9 +60,32 @@ app.get('/', function (req, res) {
     res.render("index");
 });
 //Rout for regLogin
-app.get('/regAndFirstuser', function (req, res) {
+app.get('/regAndBookPatient', function (req, res) {
     res.render("regAndFirstuser");
 });
+
+
+//Route where all doctors visit
+app.get('/allDocsPage', function (req, res) {
+    res.render("docsMain");
+});
+//Route for regestering doctor
+app.post('/doc/reg', function (req, res) {
+    // here in request bodu we have all the data --extract it
+    console.log(req.body.first_name);
+    console.log(req.body.last_name);
+    console.log(req.body.user_name);
+    console.log(req.body.password);
+    console.log(req.body.spec);
+    console.log(req.body.about);
+    console.log(req.body.at_hospital);
+
+
+
+
+});
+
+
 
 //Here we include port that we want our application to run on 
 app.listen(3000, function () {

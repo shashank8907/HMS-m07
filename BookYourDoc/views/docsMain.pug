@@ -1,0 +1,38 @@
+h1  existing user? Log In
+    if output2  
+        h3 #{output2}
+
+    form(method='POST' action='/doc/login')
+        div
+          label(for='username') username:
+          input(type='text'  placeholder='username' name='username')
+        div
+          label(for='password') Password
+          input(type='password' placeholder='password' name='password')
+        button(type='submit') Log in 
+    h1  else Register 
+    form(method='POST' action='/doc/reg')
+        div
+          label(for='last_name') first_name:
+          input(type='text'  placeholder='first_name' name='first_name')
+        div
+          label(for='last_name') last_name
+          input(type='text' placeholder='last_name' name='last_name')
+
+        div
+            label(for='username') user_name:
+            input(type='text'  placeholder='user_name' name='user_name')
+        div
+            label(for='password') Password
+            input(type='password' placeholder='password' name='password')
+        div
+            label(for='spec') spec
+            input(type='text' placeholder='spec' name='spec')
+        div
+            label(for='about') about
+            input(type='text' placeholder='about' name='about')
+        div
+            label(for='at_hospital') at hospital to and from
+            input(type='text' placeholder='at_hospital' name='at_hospital')
+
+        button(type='submit') Register
