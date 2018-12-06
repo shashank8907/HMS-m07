@@ -32,12 +32,5 @@ var doctorSchema = new mongoose.Schema({
 
 });
 
-
-
-
-
-
-
-
 var doctorN = mongoose.model('doctor', doctorSchema, 'doctor');
 module.exports = doctorN;

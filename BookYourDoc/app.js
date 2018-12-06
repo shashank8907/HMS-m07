@@ -15,11 +15,11 @@ var express = require('express');
 //Model for patients
 var patients = require('./model/patient'); //patients is now our object that we use to retrieve or add to in mlab
 
-//Model for username and password 
-// var UserLog = require('./model/users');
+// Model for Doctor
+var doctor = require('./model/docs');
 
-//model for url
-// var UserUrl = require('./model/urls');
+//model for appointment
+var appointment = require('./model/appointment');
 
 
 //get route
@@ -66,11 +66,34 @@ app.get('/', function (req, res) {
         //We pass that as a whole to our index page and iterate from there kapish?
         else {
             console.log(data);
-            res.render('index', {
-                data: data
-            });
+            
         }
     });
+    appointment.find({}, function (err, data) {
+        if (err) {
+            console.log('error occured while featching data- url, title,');
+            console.log(err);
+        }
+        //By now we get all thwe objects of UserUrl
+        //We pass that as a whole to our index page and iterate from there kapish?
+        else {
+            console.log(data);
+            
+        }
+    });
+    doctor.find({}, function (err, data) {
+        if (err) {
+            console.log('error occured while featching data- url, title,');
+            console.log(err);
+        }
+        //By now we get all thwe objects of UserUrl
+        //We pass that as a whole to our index page and iterate from there kapish?
+        else {
+            console.log(data);
+            
+        }
+    });
+    
 });
 
 

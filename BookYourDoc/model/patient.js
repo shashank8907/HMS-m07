@@ -30,7 +30,7 @@ var patientSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    age: {
+    DOB: {
         type: Number,
         required: true
     },
