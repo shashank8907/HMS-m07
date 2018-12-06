@@ -1,4 +1,6 @@
-var mongoose = require('mongoose');
+// var mongoose = require('mongoose');
+import mongoose from "mongoose";
+
 //In this schema we store the data after the registration form has been submitted
 var appointmentSchema = new mongoose.Schema({
     doc_name: {
