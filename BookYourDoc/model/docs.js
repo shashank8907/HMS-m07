@@ -1,11 +1,43 @@
 var mongoose = require('mongoose');
 
-var doctor = new mongoose.Schema({
-    userName: {type:String, required:true, unique:true},
-    password: {type:String, required:true}
+var doctorSchema = new mongoose.Schema({
+    first_name: {
+        type: String,
+        required: true
+    },
+    last_name: {
+        type: String,
+        required: true
+    },
+    user_name: {
+        type: String,
+        required: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    spec: {
+        type: String,
+        required: true
+    },
+    about: {
+        type: String,
+        required: true
+    },
+    at_hospital: {
+        type: String,
+        required: true
+    }
+
 });
 
-var User = mongoose.model('HackerUsers',userSchema,'HackerUsers');
-module.exports = User;
- 
 
+
+
+
+
+
+
+var doctorN = mongoose.model('doctor', doctorSchema, 'doctor');
+module.exports = doctorN;
