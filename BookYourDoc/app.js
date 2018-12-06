@@ -8,7 +8,7 @@ var path = require('path'); //Core module that is included nodejs
 var express = require('express');
 
 
-//Bring in models
+//BRING IN MODELS
 
 
 
@@ -95,8 +95,6 @@ app.get('/', function (req, res) {
     });
     
 });
-
-
 
 //Here we include port that we want our application to run on 
 app.listen(3000, function () {

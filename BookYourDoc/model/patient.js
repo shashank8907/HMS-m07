@@ -45,21 +45,6 @@ var patientSchema = new mongoose.Schema({
     //doc displayed on the form as mentioned above
     //note displayed on the form but is stored in the appointments table
 
-    // What is stored in appointments table?
-    /**
-     * with this table we inform patient and the doctor about the apointments and use it to store appointment information
-     * 
-     * What are the fields in the appointment collection?
-     * 
-     * patientname:
-     * doc name:
-     * date:
-     * time_alloted:
-     * note:
-     * 
-     * 
-     *  
-     */
 });
 
 var patientN = mongoose.model('patient', patientSchema, 'patient');
