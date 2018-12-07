@@ -11,6 +11,7 @@ mongoose.set('debug', true); //Added at 17:57 -- latest
 
 import path from "path";
 import express from "express";
+import redis from "redis"
 
 //BRING IN MODELS
 
