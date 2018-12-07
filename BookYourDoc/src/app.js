@@ -13,10 +13,15 @@ import path from "path";
 import express from "express";
 import redis from "redis"
 
+
+//Create Redis client to run commands
+let client = redis.createClient();
+
+client.on('connect',function (param) { 
+    console.log("Connected to redis...");
+ })
+
 //BRING IN MODELS
-
-
-
 //Model for patients
 const Patients = require('./model/patient'); //patients is now our object that we use to retrieve or add to in mlab
 
@@ -144,6 +149,14 @@ app.post('/doc/login', function (req, res) {
             return res.status(200).send();
         }
         //Here we store username and password in session and then redirect
+        //redis 
+        client.hgetall(id,function(err,obj){
+            if(!obj){
+                //What to do if our obj is not in the redix server 
+            }else{
+
+            }
+        });
         res.redirect('/pageAfterLoginReg');
         // If user is found!
         console.log(doc._id + "    " + doc.password + "     " + doc.userName);

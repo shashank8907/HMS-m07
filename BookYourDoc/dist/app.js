@@ -12,6 +12,10 @@ var _express = require("express");
 
 var _express2 = _interopRequireDefault(_express);
 
+var _redis = require("redis");
+
+var _redis2 = _interopRequireDefault(_redis);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _mongoose2.default.set('debug', true); //Added at 17:57 -- latest
@@ -25,9 +29,13 @@ _mongoose2.default.set('debug', true); //Added at 17:57 -- latest
 // var mongoose = require('mongoose');
 
 
+//Create Redis client
+var client = _redis2.default.createClient();
+client.on('connect', function (param) {
+    console.log("Connected to redis...");
+});
+
 //BRING IN MODELS
-
-
 //Model for patients
 var Patients = require('./model/patient'); //patients is now our object that we use to retrieve or add to in mlab
 
