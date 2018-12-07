@@ -29,8 +29,9 @@ _mongoose2.default.set('debug', true); //Added at 17:57 -- latest
 // var mongoose = require('mongoose');
 
 
-//Create Redis client
+//Create Redis client to run commands
 var client = _redis2.default.createClient();
+
 client.on('connect', function (param) {
     console.log("Connected to redis...");
 });
@@ -130,8 +131,33 @@ app.post('/doc/reg', function (req, res) {
         } else {
             //what happens after the user is saved in the database
             console.log("The data is stored successfully");
-            //Here we store username and password in session and then redirect
-            res.redirect('/pageAfterLoginReg');
+            //Here we store username and password in redis and then redirect with user name as hashset name
+
+            client.hmset(user_name, ['user_name_r', user_name, 'first_name_r', first_name, 'last_name_r', last_name, 'password_r', password, 'spec_r', spec, 'about_r', about, 'at_hospital_r', at_hospital], function (err, reply) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log("data stroed in the client");
+                    //check if what we atre storing in db is also stored in the redis
+                    client.hgetall(user_name, function (err, obj) {
+                        console.log(obj);
+                        if (err) {
+                            console.log(err);
+                        }
+                        if (!obj) {
+                            //If we dont have any username in our we will redirect to a login page Add a message saying login again
+                            //If the control comes here we can see err and reply in the log
+                            res.redirect('/allDocsPage');
+                        } else {
+                            //If the username is present in redis
+                            console.log("HGETALL");
+                            console.log(obj.user_name);
+                            res.redirect('/pageAfterLoginReg');
+                        }
+                    });
+                }
+                console.log(reply);
+            });
         }
     });
 });
@@ -153,7 +179,17 @@ app.post('/doc/login', function (req, res) {
             console.log(doc);
             return res.status(200).send();
         }
-        //Here we store username and password in session and then redirect
+        //Here we store username and password in redis and then redirect
+        //redis hgetall returns all the fields and values of a hash (id)
+        //id can be anything that is unique in our case id = user_name
+
+
+        client.hgetall(id, function (err, obj) {
+            if (!obj) {
+                //What to do if our obj is not in the redix server 
+
+            } else {}
+        });
         res.redirect('/pageAfterLoginReg');
         // If user is found!
         console.log(doc._id + "    " + doc.password + "     " + doc.userName);

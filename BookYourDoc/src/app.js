@@ -126,36 +126,43 @@ app.post('/doc/reg', function (req, res) {
             //Here we store username and password in redis and then redirect with user name as hashset name
 
             client.hmset(user_name, [
-                'user_name_r' = user_name,
-                'first_name_r' = first_name,
-                'last_name_r' = last_name,
-                'password_r' = password,
-                'spec_r' = spec,
-                'about_r' = about,
-                'at_hospital_r' = at_hospital
-            ],function(err,reply){
-                if(err){
+                'user_name_r', user_name,
+                'first_name_r', first_name,
+                'last_name_r', last_name,
+                'password_r', password,
+                'spec_r', spec,
+                'about_r', about,
+                'at_hospital_r', at_hospital
+            ], function (err, reply) {
+                if (err) {
                     console.log(err);
+                } else {
+                    console.log("data stroed in the client");
+                    //check if what we atre storing in db is also stored in the redis
+                    client.hgetall(user_name,
+                        function (err, obj) {
+                            console.log(obj);
+                            if (err) {
+                                console.log(err);
+                            }
+                            if (!obj) {
+                                //If we dont have any username in our we will redirect to a login page Add a message saying login again
+                                //If the control comes here we can see err and reply in the log
+                                res.redirect('/allDocsPage');
+                            } else {
+                                //If the username is present in redis
+                                console.log("HGETALL");
+                                console.log(obj.user_name);
+                                res.redirect('/pageAfterLoginReg');
+
+                            }
+                        });
+
                 }
                 console.log(reply);
-
             });
         }
     });
-    //check if what we atre storing in db is also stored in the redis
-    client.hgetall(user_name),function (err,obj) { 
-        if(!obj){
-            //If we dont have any username in our we will redirect to a login page Add a message saying login again
-            //If the control comes here we can see err and reply in the log
-            res.redirect('allDocsPage');
-        }else{  
-            //If the username is present in redis
-            console.log(obj);
-
-        }
-     };
-
-    res.redirect('/pageAfterLoginReg');
 
 });
 //Route for login form
