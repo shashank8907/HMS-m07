@@ -6,30 +6,32 @@ import mongoose from "mongoose";
 
 mongoose.set('debug', true); //Added at 17:57 -- latest
 
-var path = require('path'); //Core module that is included nodejs
-var express = require('express');
+// var path = require('path'); //Core module that is included nodejs
+// var express = require('express');
 
+import path from "path";
+import express from "express";
 
 //BRING IN MODELS
 
 
 
 //Model for patients
-var patients = require('./model/patient'); //patients is now our object that we use to retrieve or add to in mlab
+const Patients = require('./model/patient'); //patients is now our object that we use to retrieve or add to in mlab
 
 // Model for Doctor
-var doctor = require('./model/docs');
+const Doctor = require('./model/docs');
 
 //model for appointment
-var appointment = require('./model/appointment');
+const Appointment = require('./model/appointment');
 
 
 //get route
-var router = express.Router();
+const router = express.Router();
 
 
 //Body parser --using body parser will allow you to access req.body
-var bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 
 //Init App 
 const app = express();
@@ -81,13 +83,64 @@ app.post('/doc/reg', function (req, res) {
     let spec = req.body.spec;
     let about = req.body.about;
     let at_hospital = req.body.at_hospital;
+    //Assign data from front end to the doctor object
+    let doctor = new Doctor();
+    doctor.user_name = user_name;
+    doctor.first_name = first_name;
+    doctor.last_name = last_name;
+    doctor.password = password;
+    doctor.spec = spec;
+    doctor.about = about;
+    doctor.at_hospital = at_hospital;
+    //store the recieved data in doctor collection
+    doctor.save(function (err, savedUser) {
+        if (err) {
+            console.log(err);
+            return res.status(500).send();
+        } else {
+            //what happens after the user is saved in the database
+            console.log("The data is stored successfully");
 
-    console.log(first_name);
-    // here we will insert the data to the DB
+        }
+    });
 
+});
+//Route for login form
+app.post('/doc/login', function (req, res) {
+    let user_name = req.body.user_name;
+    let password = req.body.password;
+    //Check the user name and password if present in the DB or not
+    Doctor.findOne({
+        user_name: user_name,
+        password: password
+    }, 'user_name password _id', function (err, doc) {
+        if (err) {
+            console.log('inside is err');
+            return res.status(500).send();
+        }
+        if (!doc) {
+            //If user not found 
+            console.log(doc);
+            return res.status(200).send();
+        }
+        // If user is found!
+        console.log(doc._id + "  YYYYYYYYY  " + doc.password + "     " + doc.userName);
+
+        //When we get the match we redirect to main page by displaying "welcome username and adding a submit button"
+        //passing our username and password to index page for display of submit button
+        // res.render('index', {
+        //     username: username,
+        //     password: password
+
+        // });
+        //             return res.status(200).send();
+
+
+    });
 
 
 });
+
 
 
 
