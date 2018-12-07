@@ -79,7 +79,7 @@ app.get('/delete2', function (req, res) {
 //the page to be displayed after loging and after reg this is users wallpage
 app.get('/pageAfterLoginReg', function (req, res) {
     console.log("Hello");
-    res.render("pageAfterLoginReg");
+    res.render("docsDashboard");
 });
 
 //Route to our main page  
