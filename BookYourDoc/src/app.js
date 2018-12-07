@@ -60,10 +60,14 @@ db.on('error', function (err) {
 
 
 
-//Dummy route that redirects to delete1.pug
-app.get('/', function (req, res) {
+//Dummy routes that redirects to delete1 and delete2 for testing session tracking for doctor login
+app.get('/delete1', function (req, res) {
     res.render("delete1");
 });
+app.get('/delete2', function (req, res) {
+    res.render("delete2");
+});
+
 
 //Route to our main page  
 app.get('/', function (req, res) {
