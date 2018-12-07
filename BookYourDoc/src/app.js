@@ -68,6 +68,13 @@ app.get('/delete2', function (req, res) {
     res.render("delete2");
 });
 
+//the page to be displayed after loging and after reg this is users wallpage
+app.get('/pageAfterLoginReg', function (req, res) {
+    console.log("Hello");
+    res.render("pageAfterLoginReg");
+});
+
+
 
 //Route to our main page  
 app.get('/', function (req, res) {
@@ -110,6 +117,8 @@ app.post('/doc/reg', function (req, res) {
         } else {
             //what happens after the user is saved in the database
             console.log("The data is stored successfully");
+            //Here we store username and password in session and then redirect
+            res.redirect('/pageAfterLoginReg');
 
         }
     });
@@ -133,9 +142,11 @@ app.post('/doc/login', function (req, res) {
             console.log(doc);
             return res.status(200).send();
         }
+        //Here we store username and password in session and then redirect
+        res.redirect('/pageAfterLoginReg');
         // If user is found!
         console.log(doc._id + "    " + doc.password + "     " + doc.userName);
-
+        
         //When we get the match we redirect to main page by displaying "welcome username and adding a submit button"
         //passing our username and password to index page for display of submit button
         // res.render('index', {
