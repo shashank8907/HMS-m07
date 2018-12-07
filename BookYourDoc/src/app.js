@@ -61,7 +61,9 @@ db.on('error', function (err) {
 
 
 //Dummy route that redirects to delete1.pug
-
+app.get('/', function (req, res) {
+    res.render("delete1");
+});
 
 //Route to our main page  
 app.get('/', function (req, res) {
