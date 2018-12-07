@@ -59,6 +59,10 @@ db.on('error', function (err) {
 });
 
 
+
+//Dummy route that redirects to delete1.pug
+
+
 //Route to our main page  
 app.get('/', function (req, res) {
     res.render("index");
@@ -124,7 +128,7 @@ app.post('/doc/login', function (req, res) {
             return res.status(200).send();
         }
         // If user is found!
-        console.log(doc._id + "  YYYYYYYYY  " + doc.password + "     " + doc.userName);
+        console.log(doc._id + "    " + doc.password + "     " + doc.userName);
 
         //When we get the match we redirect to main page by displaying "welcome username and adding a submit button"
         //passing our username and password to index page for display of submit button
