@@ -2,7 +2,17 @@
 //- And each of that page should display username of the doc even after the browser restart(redis)
 if userName
     h1 welcome #{userName}
-a(href='/delete1') dummy page 1
+    //- //Insted of href we use form and pass the username in it so we check the status in redis
+    form(method='POST' action='/delete1')
+        input(type="hidden", name="username", value=userName)
+        button(type='submit') dummy page 1
+
+
+        
+
+//- a(href='/delete1') dummy page 1
+
+
 br
 a(href='/delete2') dummy page 2
 br
