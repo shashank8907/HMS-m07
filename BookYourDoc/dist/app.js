@@ -200,30 +200,34 @@ app.post('/doc/login', function (req, res) {
             console.log(doc);
             return res.status(200).send();
         }
-        //Here we store username and password in redis and then redirect
-        //redis hgetall returns all the fields and values of a hash (id)
-        //id can be anything that is unique in our case id = user_name
-
-
-        client.hgetall(id, function (err, obj) {
-            if (!obj) {
-                //What to do if our obj is not in the redix server 
-
-            } else {}
+        //Control comes here if the user is present in the DB
+        //Here we set/get? we set the obtained username along with it's values in redis -same as reg
+        client.hmset(user_name, ['user_name_r', user_name, 'first_name_r', first_name, 'last_name_r', last_name, 'password_r', password, 'spec_r', spec, 'about_r', about, 'at_hospital_r', at_hospital], function (err, reply) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("The data is stroed successfully to redis -Doc reg");
+                //check if what we atre storing in db is also stored in the redis
+                //We can remove this code while refactoring because if the control comes here then it means the data is stored successfully
+                client.hgetall(user_name, function (err, obj) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    if (!obj) {
+                        //If we dont have any username in our we will redirect to a login page Add a message saying login again
+                        //If the control comes here we can see err and reply in the log
+                        res.redirect('/allDocsPage');
+                    } else {
+                        //If the username is present in redis
+                        console.log(obj.user_name_r + " is present in redis");
+                        res.render('docsDashboard', {
+                            userName: obj.user_name_r
+                        });
+                    }
+                });
+            }
+            console.log(reply);
         });
-        res.redirect('/pageAfterLoginReg');
-        // If user is found!
-        console.log(doc._id + "    " + doc.password + "     " + doc.userName);
-
-        //When we get the match we redirect to main page by displaying "welcome username and adding a submit button"
-        //passing our username and password to index page for display of submit button
-        // res.render('index', {
-        //     username: username,
-        //     password: password
-
-        // });
-        //             return res.status(200).send();
-
     });
 });
 
