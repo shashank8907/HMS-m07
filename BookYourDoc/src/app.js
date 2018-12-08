@@ -141,7 +141,6 @@ app.post('/doc/reg', function (req, res) {
                     //check if what we atre storing in db is also stored in the redis
                     client.hgetall(user_name,
                         function (err, obj) {
-                            console.log(obj);
                             if (err) {
                                 console.log(err);
                             }
@@ -151,9 +150,10 @@ app.post('/doc/reg', function (req, res) {
                                 res.redirect('/allDocsPage');
                             } else {
                                 //If the username is present in redis
-                                console.log("HGETALL");
-                                console.log(obj.user_name);
-                                res.redirect('/pageAfterLoginReg');
+                                console.log(obj.user_name_r);
+                                res.render('docsDashboard', {
+                                    userName: obj.user_name_r
+                                });
 
                             }
                         });
