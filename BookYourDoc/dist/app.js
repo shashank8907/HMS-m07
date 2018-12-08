@@ -81,7 +81,25 @@ db.on('error', function (err) {
 app.post('/delete1', function (req, res) {
     //Before rendering the page we check if the redis contains username or not 
     console.log("The delete1 page has: " + req.body.userName);
-    res.render("delete1");
+    if (req.body.userName != undefined) {
+        //perform this only if the username is present in the database
+        client.hgetall(req.body.userName, function (err, obj) {
+            if (err) {
+                console.log(err);
+            }
+            if (!obj) {
+                //If we dont have any username in our we will redirect to a login page Add a message saying login again
+                //If the control comes here we can see err and reply in the log
+                res.redirect('/allDocsPage');
+            } else {
+                //If the username is present in redis
+                res.render('delete1', {
+                    userName: obj.user_name_r
+
+                });
+            }
+        });
+    }
 });
 app.get('/delete2', function (req, res) {
     res.render("delete2");
