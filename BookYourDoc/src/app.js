@@ -67,7 +67,7 @@ db.on('error', function (err) {
 
 
 //Dummy routes that redirects to delete1 and delete2 for testing session tracking for doctor login
-app.get('/delete1', function (req, res) {
+app.post('/delete1', function (req, res) {
     //Before rendering the page we check if the redis contains username or not 
     res.render("delete1");
 });

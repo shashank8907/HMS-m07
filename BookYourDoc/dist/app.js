@@ -79,6 +79,7 @@ db.on('error', function (err) {
 
 //Dummy routes that redirects to delete1 and delete2 for testing session tracking for doctor login
 app.get('/delete1', function (req, res) {
+    //Before rendering the page we check if the redis contains username or not 
     res.render("delete1");
 });
 app.get('/delete2', function (req, res) {
@@ -130,16 +131,17 @@ app.post('/doc/reg', function (req, res) {
             return res.status(500).send();
         } else {
             //what happens after the user is saved in the database
-            console.log("The data is stored successfully");
+            console.log("The data is stored successfully in mongo DB -Doc reg");
             //Here we store username and password in redis and then redirect with user name as hashset name
-
-            client.hmset(user_name, ['user_name_r', user_name, 'first_name_r', first_name, 'last_name_r', last_name, 'password_r', password, 'spec_r', spec, 'about_r', about, 'at_hospital_r', at_hospital], function (err, reply) {
+            //Insted of storing the data with the name of the user we can store it as doctor as there can be only one doctor
+            client.hmset("doctor", ['user_name_r', user_name, 'first_name_r', first_name, 'last_name_r', last_name, 'password_r', password, 'spec_r', spec, 'about_r', about, 'at_hospital_r', at_hospital], function (err, reply) {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log("data stroed in the client");
+                    console.log("The data is stroed successfully to redis -Doc reg");
                     //check if what we atre storing in db is also stored in the redis
-                    client.hgetall(user_name, function (err, obj) {
+                    //We can remove this code while refactoring because if the control comes here then it means the data is stored successfully
+                    client.hgetall("doctor", function (err, obj) {
                         if (err) {
                             console.log(err);
                         }
@@ -149,7 +151,7 @@ app.post('/doc/reg', function (req, res) {
                             res.redirect('/allDocsPage');
                         } else {
                             //If the username is present in redis
-                            console.log(obj.user_name_r);
+                            console.log(obj.user_name_r + " is present in redis");
                             res.render('docsDashboard', {
                                 userName: obj.user_name_r
                             });
