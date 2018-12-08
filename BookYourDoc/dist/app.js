@@ -150,7 +150,9 @@ app.post('/doc/reg', function (req, res) {
                         } else {
                             //If the username is present in redis
                             console.log(obj.user_name_r);
-                            res.redirect('/pageAfterLoginReg');
+                            res.render('docsDashboard', {
+                                userName: obj.user_name_r
+                            });
                         }
                     });
                 }

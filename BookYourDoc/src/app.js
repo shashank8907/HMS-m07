@@ -122,7 +122,7 @@ app.post('/doc/reg', function (req, res) {
             return res.status(500).send();
         } else {
             //what happens after the user is saved in the database
-            console.log("The data is stored successfully");
+            console.log("The data is stored successfully in mongo DB -Doc reg");
             //Here we store username and password in redis and then redirect with user name as hashset name
 
             client.hmset(user_name, [
@@ -137,7 +137,7 @@ app.post('/doc/reg', function (req, res) {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log("data stroed in the client");
+                    console.log("The data is stroed successfully to redis -Doc reg");
                     //check if what we atre storing in db is also stored in the redis
                     client.hgetall(user_name,
                         function (err, obj) {
@@ -150,7 +150,7 @@ app.post('/doc/reg', function (req, res) {
                                 res.redirect('/allDocsPage');
                             } else {
                                 //If the username is present in redis
-                                console.log(obj.user_name_r);
+                                console.log(obj.user_name_r+" is present in redis");
                                 res.render('docsDashboard', {
                                     userName: obj.user_name_r
                                 });
