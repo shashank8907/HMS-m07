@@ -16,6 +16,10 @@ var _redis = require("redis");
 
 var _redis2 = _interopRequireDefault(_redis);
 
+var _cookieParser = require("cookie-parser");
+
+var _cookieParser2 = _interopRequireDefault(_cookieParser);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _mongoose2.default.set('debug', true); //Added at 17:57 -- latest
@@ -54,6 +58,9 @@ var bodyParser = require('body-parser');
 
 //Init App 
 var app = (0, _express2.default)();
+
+//cookies
+app.use((0, _cookieParser2.default)());
 
 //add for form data 
 app.use(bodyParser());
@@ -151,6 +158,8 @@ app.post('/doc/reg', function (req, res) {
         } else {
             //what happens after the user is saved in the database
             console.log("The data is stored successfully in mongo DB -Doc reg");
+            //before storing the data we aslo set the users name as cookie
+            res.cookie('user_name_c', doctor.user_name, { expire: 60 * 1000 }); //1 minute
             //Here we store username and password in redis and then redirect with user name as hashset name
             //Insted of storing the data with the name of the user we can store it as doctor as there can be only one doctor
             client.hmset(user_name, ['user_name_r', user_name, 'first_name_r', first_name, 'last_name_r', last_name, 'password_r', password, 'spec_r', spec, 'about_r', about, 'at_hospital_r', at_hospital], function (err, reply) {
@@ -200,6 +209,8 @@ app.post('/doc/login', function (req, res) {
             console.log(doc);
             return res.status(200).send();
         }
+        //After doc loggs in add cookie
+        res.cookie('user_name_c', doc.user_name, { expire: 60 * 1000 }); //1 minute
         //Control comes here if the user is present in the DB
         //Here we set/get? we set the obtained username along with it's values in redis -same as reg
         client.hmset(doc.user_name, ['user_name_r', doc.user_name, 'first_name_r', doc.first_name, 'last_name_r', doc.last_name, 'password_r', doc.password, 'spec_r', doc.spec, 'about_r', doc.about, 'at_hospital_r', doc.at_hospital], function (err, reply) {

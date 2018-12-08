@@ -149,6 +149,8 @@ app.post('/doc/reg', function (req, res) {
         } else {
             //what happens after the user is saved in the database
             console.log("The data is stored successfully in mongo DB -Doc reg");
+            //before storing the data we aslo set the users name as cookie
+            res.cookie('user_name_c' , doctor.user_name,{expire :  60 * 1000 });//1 minute
             //Here we store username and password in redis and then redirect with user name as hashset name
             //Insted of storing the data with the name of the user we can store it as doctor as there can be only one doctor
             client.hmset(user_name, [
@@ -208,6 +210,8 @@ app.post('/doc/login', function (req, res) {
             console.log(doc);
             return res.status(200).send();
         }
+        //After doc loggs in add cookie
+        res.cookie( 'user_name_c' , doc.user_name,{expire :  60 * 1000 });//1 minute
         //Control comes here if the user is present in the DB
         //Here we set/get? we set the obtained username along with it's values in redis -same as reg
         client.hmset(doc.user_name, [
