@@ -69,6 +69,7 @@ db.on('error', function (err) {
 //Dummy routes that redirects to delete1 and delete2 for testing session tracking for doctor login
 app.post('/delete1', function (req, res) {
     //Before rendering the page we check if the redis contains username or not 
+    console.log("The delete page has: "+req.body.userName);
     res.render("delete1");
 });
 app.get('/delete2', function (req, res) {
@@ -126,7 +127,7 @@ app.post('/doc/reg', function (req, res) {
             console.log("The data is stored successfully in mongo DB -Doc reg");
             //Here we store username and password in redis and then redirect with user name as hashset name
             //Insted of storing the data with the name of the user we can store it as doctor as there can be only one doctor
-            client.hmset("doctor", [
+            client.hmset(user_name, [
                 'user_name_r', user_name,
                 'first_name_r', first_name,
                 'last_name_r', last_name,
@@ -141,7 +142,7 @@ app.post('/doc/reg', function (req, res) {
                     console.log("The data is stroed successfully to redis -Doc reg");
                     //check if what we atre storing in db is also stored in the redis
                     //We can remove this code while refactoring because if the control comes here then it means the data is stored successfully
-                    client.hgetall("doctor",
+                    client.hgetall(user_name,
                         function (err, obj) {
                             if (err) {
                                 console.log(err);
@@ -156,10 +157,8 @@ app.post('/doc/reg', function (req, res) {
                                 res.render('docsDashboard', {
                                     userName: obj.user_name_r
                                 });
-
                             }
                         });
-
                 }
                 console.log(reply);
             });
