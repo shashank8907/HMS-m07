@@ -184,13 +184,13 @@ app.post('/doc/reg', function (req, res) {
 });
 //Route for login form
 app.post('/doc/login', function (req, res) {
-    var user_name = req.body.user_name;
+    var user_name_req = req.body.user_name;
     var password = req.body.password;
     //Check the user name and password if present in the DB or not
     Doctor.findOne({
-        user_name: user_name,
+        user_name: user_name_req,
         password: password
-    }, 'user_name password _id', function (err, doc) {
+    }, 'user_name password _id first_name last_name spec about at_hospital', function (err, doc) {
         if (err) {
             console.log('inside is err');
             return res.status(500).send();
@@ -202,14 +202,14 @@ app.post('/doc/login', function (req, res) {
         }
         //Control comes here if the user is present in the DB
         //Here we set/get? we set the obtained username along with it's values in redis -same as reg
-        client.hmset(user_name, ['user_name_r', user_name, 'first_name_r', first_name, 'last_name_r', last_name, 'password_r', password, 'spec_r', spec, 'about_r', about, 'at_hospital_r', at_hospital], function (err, reply) {
+        client.hmset(doc.user_name, ['user_name_r', doc.user_name, 'first_name_r', doc.first_name, 'last_name_r', doc.last_name, 'password_r', doc.password, 'spec_r', doc.spec, 'about_r', doc.about, 'at_hospital_r', doc.at_hospital], function (err, reply) {
             if (err) {
                 console.log(err);
             } else {
                 console.log("The data is stroed successfully to redis -Doc reg");
                 //check if what we atre storing in db is also stored in the redis
                 //We can remove this code while refactoring because if the control comes here then it means the data is stored successfully
-                client.hgetall(user_name, function (err, obj) {
+                client.hgetall(doc.user_name, function (err, obj) {
                     if (err) {
                         console.log(err);
                     }
