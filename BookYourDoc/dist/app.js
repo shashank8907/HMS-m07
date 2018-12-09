@@ -120,6 +120,7 @@ app.get('/pageAfterLoginReg', function (req, res) {
 
 //Route to our main page  
 app.get('/', function (req, res) {
+    //check if the user in present in the redis if so then redirect dashboard
     res.render("index");
 });
 //Rout for regLogin
@@ -191,8 +192,12 @@ app.post('/doc/reg', function (req, res) {
         }
     });
 });
+
 //Route for login form
 app.post('/doc/login', function (req, res) {
+    // before performin any of the below code check if the users data is already present in the data or not if it's present the 
+
+
     var user_name_req = req.body.user_name;
     var password = req.body.password;
     //Check the user name and password if present in the DB or not
