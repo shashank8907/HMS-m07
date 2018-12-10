@@ -133,11 +133,32 @@ app.get('/allDocsPage', function (req, res) {
     if (req.cookies.user_name_c === undefined) {
         //The user key is not present in the cookie
         res.render("docsMain");
+    } else {
+        //The username is set in the cookie 
+
+        client.hgetall(req.cookies.user_name_c,
+            function (err, obj) {
+                if (err) {
+                    console.log(err);
+                }
+                if (!obj) {
+                    //If we dont have any username in our we will redirect to a login page Add a message saying login again
+                    //If the control comes here we can see err and reply in the log
+                    res.redirect('/allDocsPage');
+                } else {
+                    //If the username is present in redis
+                    console.log(obj.user_name_r + " is present in redis");
+                    res.render('docsDashboard', {
+                        userName: obj.user_name_r
+                    });
+                }
+            });
+
+        // res.render("index");
     }
 
 
 
-    res.render("index");
 });
 //Route for regestering doctor
 app.post('/doc/reg', function (req, res) {
