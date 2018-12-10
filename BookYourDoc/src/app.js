@@ -121,6 +121,31 @@ app.get('/regAndBookPatient', function (req, res) {
 
 //Route where all doctors visit
 app.get('/allDocsPage', function (req, res) {
+    //Before redirecting the page to login we ccheck if any username is present in redis or not
+    //Before we check if the username and password is present in the DB we check if it present in the redis
+    let user_name_c = req.cookies.user_name_c;
+    if (user_name_c) {
+        client.hgetall(user_name_c,
+            function (err, obj) {
+                if (err) {
+                    console.log(err);
+                }
+                if (!obj) {
+
+                    //Do nothing if that object is not found
+                } else {
+                    //If the username is present in redis
+                    console.log(obj.user_name_r + " is present in redis and in clookie so auto login");
+                    res.render('docsDashboard', {
+                        userName: obj.user_name_r
+                    });
+                }
+            });
+
+    }
+
+
+
     res.render("docsMain");
 });
 //Route for regestering doctor
@@ -151,7 +176,9 @@ app.post('/doc/reg', function (req, res) {
             //what happens after the user is saved in the database
             console.log("The data is stored successfully in mongo DB -Doc reg");
             //before storing the data we aslo set the users name as cookie
-            res.cookie('user_name_c' , doctor.user_name,{expire :  60 * 1000 });//1 minute
+            res.cookie('user_name_c', doctor.user_name, {
+                expire: 60 * 1000
+            }); //1 minute
             //Here we store username and password in redis and then redirect with user name as hashset name
             //Insted of storing the data with the name of the user we can store it as doctor as there can be only one doctor
             client.hmset(user_name, [
@@ -197,11 +224,13 @@ app.post('/doc/reg', function (req, res) {
 //Route for login form
 app.post('/doc/login', function (req, res) {
     // before performin any of the below code check if the users data is already present in the data or not if it's present the 
-
+    console.log("in the cookie: " + req.cookies.user_name_c)
 
 
     let user_name_req = req.body.user_name;
     let password = req.body.password;
+
+
     //Check the user name and password if present in the DB or not
     Doctor.findOne({
         user_name: user_name_req,
@@ -217,7 +246,9 @@ app.post('/doc/login', function (req, res) {
             return res.status(200).send();
         }
         //After doc loggs in add cookie
-        res.cookie( 'user_name_c' , doc.user_name,{expire :  60 * 1000 });//1 minute
+        res.cookie('user_name_c', doc.user_name, {
+            expire: 60 * 1000
+        }); //1 minute
         //Control comes here if the user is present in the DB
         //Here we set/get? we set the obtained username along with it's values in redis -same as reg
         client.hmset(doc.user_name, [
@@ -259,6 +290,21 @@ app.post('/doc/login', function (req, res) {
     });
 
 
+});
+
+
+app.post('/doc/logout', function (req, res) {
+
+    let cookieName = req.cookies.user_name_c;
+    res.clearCookie(cookieName);
+    //Remove username from redis
+    client.del(cookieName);
+    //Check if our cookie and rediskey have been deleted
+
+
+    
+    //render main page again
+    res.render("index");
 });
 
 
