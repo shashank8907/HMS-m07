@@ -129,7 +129,7 @@ app.get('/dash/delete2', function (req, res) {
                 } else {
                     //If the username is present in redis
                     console.log(obj.user_name_r + " is present in redis");
-                    res.render('delete1', {
+                    res.render('delete2', {
                         userName: obj.user_name_r,
                         about: obj.about_r,
                         at_hospital: obj.at_hospital_r

@@ -142,7 +142,7 @@ app.get('/dash/delete2', function (req, res) {
                 res.render('delete1', {
                     userName: obj.user_name_r,
                     about: obj.about_r,
-                    at_hospital: at_hospital_r
+                    at_hospital: obj.at_hospital_r
 
                 });
             }
