@@ -59,6 +59,9 @@ var bodyParser = require('body-parser');
 //Init App 
 var app = (0, _express2.default)();
 
+//Public folder
+app.use(_express2.default.static('public'));
+
 //cookies
 app.use((0, _cookieParser2.default)());
 
