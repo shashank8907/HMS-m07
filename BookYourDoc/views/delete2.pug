@@ -1,1 +1,6 @@
-h1 testing page for session tracking delete2.pug
+if userName
+    h1 welcome #{userName}
+    h2 about #{userName} : #{about}
+    h2 Your timings at hospital : #{at_hospital}
+    form(method='POST' action='/doc/logout')
+        button(type='submit') logout
