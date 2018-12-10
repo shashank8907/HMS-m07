@@ -110,6 +110,11 @@ app.get('/pageAfterLoginReg', function (req, res) {
 
 //Route to our main page  
 app.get('/', function (req, res) {
+    //Check cookie status
+    let userCookieName = req.cookies.user_name_c;
+    console.log("The username present now in the cookie now in / is:  " + req.cookies.user_name_c);
+
+
     //check if the user in present in the redis if so then redirect dashboard
     res.render("index");
 });
@@ -121,32 +126,18 @@ app.get('/regAndBookPatient', function (req, res) {
 
 //Route where all doctors visit
 app.get('/allDocsPage', function (req, res) {
-    //Before redirecting the page to login we ccheck if any username is present in redis or not
-    //Before we check if the username and password is present in the DB we check if it present in the redis
-    let user_name_c = req.cookies.user_name_c;
-    if (user_name_c) {
-        client.hgetall(user_name_c,
-            function (err, obj) {
-                if (err) {
-                    console.log(err);
-                }
-                if (!obj) {
-
-                    //Do nothing if that object is not found
-                } else {
-                    //If the username is present in redis
-                    console.log(obj.user_name_r + " is present in redis and in clookie so auto login");
-                    res.render('docsDashboard', {
-                        userName: obj.user_name_r
-                    });
-                }
-            });
-
+    // all docs page redirects to docsMain if the username is not present in the cookie
+    console.log("The username present now in the cookie now in /allDocsPage is:  " + req.cookies.user_name_c);
+    //If it is present then check the redis 
+    //If in redis it's not present then render to docsMain
+    if (req.cookies.user_name_c === undefined) {
+        //The user key is not present in the cookie
+        res.render("docsMain");
     }
 
 
 
-    res.render("docsMain");
+    res.render("index");
 });
 //Route for regestering doctor
 app.post('/doc/reg', function (req, res) {
@@ -272,6 +263,9 @@ app.post('/doc/login', function (req, res) {
                             console.log(err);
                         }
                         if (!obj) {
+
+                            //We set the cookie as well
+
                             //If we dont have any username in our we will redirect to a login page Add a message saying login again
                             //If the control comes here we can see err and reply in the log
                             res.redirect('/allDocsPage');
@@ -292,23 +286,21 @@ app.post('/doc/login', function (req, res) {
 
 });
 
+var delete_cookie = function (name) {
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};
 
 app.post('/doc/logout', function (req, res) {
 
-    let cookieName = req.cookies.user_name_c;
-    res.clearCookie(cookieName);
-    //Remove username from redis
-    client.del(cookieName);
-    //Check if our cookie and rediskey have been deleted
+    let userCookieName = req.cookies.user_name_c;
+    // res.clearCookie(userCookieName);
+    // //Remove username from redis
+    // client.del(userCookieName);
+    // //Check if our cookie and rediskey have been deleted
+    res.clearCookie("user_name_c");
+    return res.status(200).redirect('/');
 
-
-    
-    //render main page again
-    res.render("index");
 });
-
-
-
 
 //Here we include port that we want our application to run on 
 app.listen(3000, function () {
