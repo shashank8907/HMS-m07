@@ -7,13 +7,12 @@ import mongoose from "mongoose";
 mongoose.set('debug', true); //Added at 17:57 -- latest
 
 // var path = require('path'); //Core module that is included nodejs
-// var express = require('express');
+// var express = require('express')
 
 import path from "path";
 import express from "express";
 import redis from "redis";
 import cookieParser from "cookie-parser";
-
 
 
 //Create Redis client to run commands
@@ -95,7 +94,7 @@ app.get('/dash/delete1', function (req, res) {
                 if (!obj) {
                     //If we dont have any username in our we will redirect to a login page Add a message saying login again
                     //If the control comes here we can see err and reply in the log
-                    res.redirect('/index');
+                    res.redirect('/');
                 } else {
                     //If the username is present in redis
                     console.log(obj.user_name_r + " is present in redis");
@@ -129,7 +128,7 @@ app.get('/dash/delete2', function (req, res) {
                 if (!obj) {
                     //If we dont have any username in our we will redirect to a login page Add a message saying login again
                     //If the control comes here we can see err and reply in the log
-                    res.redirect('/index');
+                    res.redirect('/');
                 } else {
                     //If the username is present in redis
                     console.log(obj.user_name_r + " is present in redis");
@@ -143,9 +142,6 @@ app.get('/dash/delete2', function (req, res) {
             });
     }
 });
-
-
-
 
 //Route to our main page  
 app.get('/', function (req, res) {
@@ -178,7 +174,10 @@ app.get('/', function (req, res) {
         res.render("index");
     }
 });
+
 //Rout for regLogin
+//Here before we render the page we send our object that has all the info
+//How should that object be 
 app.get('/allPatientPage', function (req, res) {
     res.render("regAndFirstuser");
 });
@@ -227,11 +226,6 @@ app.get('/allDocsPage', function (req, res) {
     }
 
 });
-
-
-
-
-
 
 //Route for regestering doctor
 app.post('/doc/reg', function (req, res) {
@@ -379,10 +373,6 @@ app.post('/doc/login', function (req, res) {
 
 
 });
-
-var delete_cookie = function (name) {
-    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-};
 
 app.post('/doc/logout', function (req, res) {
 

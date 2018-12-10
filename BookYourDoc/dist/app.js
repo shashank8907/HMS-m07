@@ -25,7 +25,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _mongoose2.default.set('debug', true); //Added at 17:57 -- latest
 
 // var path = require('path'); //Core module that is included nodejs
-// var express = require('express');
+// var express = require('express')
 
 //This is the js file that deals with service
 
@@ -106,7 +106,7 @@ app.get('/dash/delete1', function (req, res) {
             if (!obj) {
                 //If we dont have any username in our we will redirect to a login page Add a message saying login again
                 //If the control comes here we can see err and reply in the log
-                res.redirect('/index');
+                res.redirect('/');
             } else {
                 //If the username is present in redis
                 console.log(obj.user_name_r + " is present in redis");
@@ -138,7 +138,7 @@ app.get('/dash/delete2', function (req, res) {
             if (!obj) {
                 //If we dont have any username in our we will redirect to a login page Add a message saying login again
                 //If the control comes here we can see err and reply in the log
-                res.redirect('/index');
+                res.redirect('/');
             } else {
                 //If the username is present in redis
                 console.log(obj.user_name_r + " is present in redis");
