@@ -117,7 +117,7 @@ app.get('/dash/delete1', function (req, res) {
         });
     }
 });
-app.get('/delete2', function (req, res) {
+app.get('/dash/delete2', function (req, res) {
     // all docs page redirects to docsMain if the username is not present in the cookie
     console.log("The username present now in the cookie now in /allDocsPage is:  " + req.cookies.user_name_c);
     //If it is present then check the redis 
