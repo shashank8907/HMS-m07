@@ -135,14 +135,14 @@ app.get('/', function (req, res) {
                 res.redirect('/allDocsPage');
             } else {
                 //If the username is present in redis
-                console.log(obj.user_name_r + " is present in redis");
+                console.log(obj.user_name_r + " is present in redis this is from /");
                 res.render('index', {
                     userName: obj.user_name_r
                 });
             }
         });
     } else {
-        //check if the user in present in the redis if so then redirect dashboard
+        //If the user is not present in the cookie
         res.render("index");
     }
 });
