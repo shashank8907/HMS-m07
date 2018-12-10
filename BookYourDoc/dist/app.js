@@ -85,23 +85,32 @@ db.on('error', function (err) {
 });
 
 //Dummy routes that redirects to delete1 and delete2 for testing session tracking for doctor login
-app.post('/delete1', function (req, res) {
-    //Before rendering the page we check if the redis contains username or not 
-    console.log("The delete1 page has: " + req.body.userName);
-    if (req.body.userName != undefined) {
-        //perform this only if the username is present in the database
-        client.hgetall(req.body.userName, function (err, obj) {
+app.get('/dash/delete1', function (req, res) {
+    // all docs page redirects to docsMain if the username is not present in the cookie
+    console.log("The username present now in the cookie now in /allDocsPage is:  " + req.cookies.user_name_c);
+    //If it is present then check the redis 
+    //If in redis it's not present then render to docsMain
+    if (req.cookies.user_name_c === undefined) {
+        //The user key is not present in the cookie
+        res.render("index");
+    } else {
+        //The username is set in the cookie 
+
+        client.hgetall(req.cookies.user_name_c, function (err, obj) {
             if (err) {
                 console.log(err);
             }
             if (!obj) {
                 //If we dont have any username in our we will redirect to a login page Add a message saying login again
                 //If the control comes here we can see err and reply in the log
-                res.redirect('/allDocsPage');
+                res.redirect('/index');
             } else {
                 //If the username is present in redis
+                console.log(obj.user_name_r + " is present in redis");
                 res.render('delete1', {
-                    userName: obj.user_name_r
+                    userName: obj.user_name_r,
+                    about: obj.about_r,
+                    spec: obj.spec_r
 
                 });
             }

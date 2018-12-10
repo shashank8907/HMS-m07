@@ -72,7 +72,7 @@ db.on('error', function (err) {
 
 
 //Dummy routes that redirects to delete1 and delete2 for testing session tracking for doctor login
-app.post('/delete1', function (req, res) {
+app.get('/dash/delete1', function (req, res) {
     // all docs page redirects to docsMain if the username is not present in the cookie
     console.log("The username present now in the cookie now in /allDocsPage is:  " + req.cookies.user_name_c);
     //If it is present then check the redis 
@@ -97,11 +97,11 @@ app.post('/delete1', function (req, res) {
                     console.log(obj.user_name_r + " is present in redis");
                     res.render('delete1', {
                         userName: obj.user_name_r,
-                        about:about_r,
-                        spec:spec_r 
+                        about:obj.about_r,
+                        spec:obj.spec_r 
                    
                     });
-                }
+                }   
             });
 
     }
