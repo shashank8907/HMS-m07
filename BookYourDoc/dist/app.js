@@ -150,12 +150,6 @@ app.get('/dash/delete2', function (req, res) {
     }
 });
 
-//the page to be displayed after loging and after reg this is users wallpage
-app.get('/pageAfterLoginReg', function (req, res) {
-    console.log("Hello");
-    res.render("docsDashboard");
-});
-
 //Route to our main page  
 app.get('/', function (req, res) {
     //Check cookie status
@@ -185,9 +179,17 @@ app.get('/', function (req, res) {
     }
 });
 //Rout for regLogin
-app.get('/regAndBookPatient', function (req, res) {
+app.get('/allPatientPage', function (req, res) {
     res.render("regAndFirstuser");
 });
+
+////REMOVE if not used anywhere in applica
+// //the page to be displayed after loging and after reg this is users wallpage
+// app.get('/pageAfterLoginReg', function (req, res) {
+//     console.log("Hello");
+//     res.render("docsDashboard");
+// });
+
 
 //Route where all doctors visit
 app.get('/allDocsPage', function (req, res) {
@@ -219,6 +221,7 @@ app.get('/allDocsPage', function (req, res) {
         });
     }
 });
+
 //Route for regestering doctor
 app.post('/doc/reg', function (req, res) {
     // here in request bodu we have all the data --extract it

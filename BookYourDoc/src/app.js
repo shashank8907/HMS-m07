@@ -44,6 +44,10 @@ const bodyParser = require('body-parser');
 //Init App 
 const app = express();
 
+//Public folder
+app.use(express.static('public'));
+
+
 //cookies
 app.use(cookieParser());
 
@@ -175,14 +179,14 @@ app.get('/', function (req, res) {
     }
 });
 //Rout for regLogin
-app.get('/regAndBookPatient', function (req, res) {
+app.get('/allPatientPage', function (req, res) {
     res.render("regAndFirstuser");
 });
 
 
 
 
-////REMOVE if not used anywhere in application
+////REMOVE if not used anywhere in applica
 // //the page to be displayed after loging and after reg this is users wallpage
 // app.get('/pageAfterLoginReg', function (req, res) {
 //     console.log("Hello");

@@ -1,39 +1,67 @@
+a(href='') Click here if you already have an account
+br
+br 
+br
+br
+
+//- When the page loads in the session store three lists 
+//- Doctors, duration, specialization
+
+
+
+h1 Book your appointment and register at the same time 
 //- This 
 form(method='POST' action='/regAndBookPatient')
   div
+    //- store in DB
     label(for='username') username:
-    input(type='text'  placeholder='username' name='username')
+    input(type='text'  placeholder='username' name='username') 
   div
+    //- store in DB
     label(for='password') Password
     input(type='password' placeholder='password' name='password')
   div
+    //- store in DB
     label(for='name') name
     input(type='text' placeholder='name' name='name')
   div
+    //- store in DB
     label(for='email') email
     input(type='email' placeholder='email' name='email')
   div
+    //- store in DB
     label(for='phno') phno
     input(type='text' placeholder='phno' name='phno')
   div
+    //- store in DB
     label(for='gender') gender
     input(type='text' placeholder='genderSingleLetter' name='gender')
   div
+    //- store in DB
     label(for='DOB') DOB
     input(type='text' placeholder='Date Of Birth' name='DOB')
   div
+    //- store in DB
     label(for='adderess') Address
     input(type='text' placeholder='address' name='address')
   div
+    //- Get from Doc DB
     label(for='specilization') specilization
     input(type='text' placeholder='specilization' name='specilization')
   div
+    //- Get from Doc DB 
+    label(for='doctors') Docotors
+    input(type='text' placeholder='doctors present' name='doctors')
+  div
+    //- Get from Doc DB 
     label(for='Time') Time
     input(type='text' placeholder='Time the doctor is available interavel' name='time')
   div
+    //- Get from Doc DB
     label(for='Duration') Duration
     input(type='text' placeholder='Duration of the visit' name='duration')
   div
+    //- store in DB
     label(for='Note') Note
     input(type='text' placeholder='Note' name='note')
           
