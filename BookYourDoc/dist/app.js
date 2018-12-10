@@ -160,8 +160,6 @@ app.get('/allDocsPage', function (req, res) {
                 });
             }
         });
-
-        // res.render("index");
     }
 });
 //Route for regestering doctor
