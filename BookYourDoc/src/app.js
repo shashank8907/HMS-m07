@@ -11,8 +11,8 @@ mongoose.set('debug', true); //Added at 17:57 -- latest
 
 import path from "path";
 import express from "express";
-import redis from "redis"
-import cookieParser from "cookie-parser"
+import redis from "redis";
+import cookieParser from "cookie-parser";
 
 
 
@@ -137,16 +137,9 @@ app.get('/dash/delete2', function (req, res) {
                     });
                 }
             });
-
     }
-
 });
 
-//the page to be displayed after loging and after reg this is users wallpage
-app.get('/pageAfterLoginReg', function (req, res) {
-    console.log("Hello");
-    res.render("docsDashboard");
-});
 
 
 
@@ -187,6 +180,16 @@ app.get('/regAndBookPatient', function (req, res) {
 });
 
 
+
+
+////REMOVE if not used anywhere in application
+// //the page to be displayed after loging and after reg this is users wallpage
+// app.get('/pageAfterLoginReg', function (req, res) {
+//     console.log("Hello");
+//     res.render("docsDashboard");
+// });
+
+
 //Route where all doctors visit
 app.get('/allDocsPage', function (req, res) {
     // all docs page redirects to docsMain if the username is not present in the cookie
@@ -220,6 +223,12 @@ app.get('/allDocsPage', function (req, res) {
     }
 
 });
+
+
+
+
+
+
 //Route for regestering doctor
 app.post('/doc/reg', function (req, res) {
     // here in request bodu we have all the data --extract it
