@@ -122,10 +122,29 @@ app.get('/pageAfterLoginReg', function (req, res) {
 app.get('/', function (req, res) {
     //Check cookie status
     var userCookieName = req.cookies.user_name_c;
-    console.log("The username present now in the cookie now in / is:  " + req.cookies.user_name_c);
-
-    //check if the user in present in the redis if so then redirect dashboard
-    res.render("index");
+    console.log("The username present now in the cookie now in / is:  " + userCookieName);
+    if (userCookieName !== undefined) {
+        //Check if the user name is present in the redis 
+        client.hgetall(userCookieName, function (err, obj) {
+            if (err) {
+                console.log(err);
+            }
+            if (!obj) {
+                //If we dont have any username in our we will redirect to a login page Add a message saying login again
+                //If the control comes here we can see err and reply in the log
+                res.redirect('/allDocsPage');
+            } else {
+                //If the username is present in redis
+                console.log(obj.user_name_r + " is present in redis");
+                res.render('index', {
+                    userName: obj.user_name_r
+                });
+            }
+        });
+    } else {
+        //check if the user in present in the redis if so then redirect dashboard
+        res.render("index");
+    }
 });
 //Rout for regLogin
 app.get('/regAndBookPatient', function (req, res) {

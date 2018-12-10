@@ -1,14 +1,14 @@
 
-h1 Book Your Doctor Appointment 
 
 if userName
-    h1 welcome #{userName}
+    h1 Welcome #{userName}
     a(href='/allDocsPage') Doctor's Dashboard
     //- //When the user clicks this his username will be removed from the redis and the cookies and will be redirected 
     form(method='POST' action='/doc/logout')
         button(type='submit') logout
     
 else
+    h1 Book Your Doctor Appointment 
     a(href='/regAndFirstuser') firsttime user?
     br
     a(href='/allDocsPage') click here if you are a doctor
