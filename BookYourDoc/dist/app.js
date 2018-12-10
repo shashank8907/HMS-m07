@@ -181,7 +181,10 @@ app.get('/', function (req, res) {
         res.render("index");
     }
 });
+
 //Rout for regLogin
+//Here before we render the page we send our object that has all the info
+//How should that object be 
 app.get('/allPatientPage', function (req, res) {
     res.render("regAndFirstuser");
 });
@@ -347,10 +350,6 @@ app.post('/doc/login', function (req, res) {
         });
     });
 });
-
-var delete_cookie = function delete_cookie(name) {
-    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
-};
 
 app.post('/doc/logout', function (req, res) {
 

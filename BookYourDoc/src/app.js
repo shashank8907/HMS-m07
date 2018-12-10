@@ -175,6 +175,8 @@ app.get('/', function (req, res) {
     }
 });
 
+
+//9:00AM - 4:00PM    --standard timings of doc
 //Rout for regLogin
 //Here before we render the page we send our object that has all the info
 //How should that object be 
