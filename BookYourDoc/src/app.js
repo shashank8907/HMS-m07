@@ -194,7 +194,7 @@ app.get('/allPatientPage', function (req, res) {
         let docSpecs=[];
         let timings=[];
 
-        console.log(result)
+        // console.log(result)
 
         // result.forEach(function (arrayItem) {
 
@@ -211,7 +211,7 @@ app.get('/allPatientPage', function (req, res) {
 
         // console.log(docFirstName);
         res.render("regAndFirstuser",{
-            result: result
+            results: result
         });
     });
 });

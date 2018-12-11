@@ -197,26 +197,24 @@ app.get('/allPatientPage', function (req, res) {
         var docUserNames = [];
         var docSpecs = [];
         var timings = [];
-        //result is array of userid of all document
-        // console.log(result);
-        //Result has array of objects
-        console.log(result);
-        result.forEach(function (arrayItem) {
 
-            docFirstName.push(arrayItem.first_name.trim());
-            docLastName.push(arrayItem.last_name.trim());
-            docUserNames.push(arrayItem.user_name.trim());
-            docSpecs.push(arrayItem.spec.trim());
-            timings.push(arrayItem.at_hospital.trim());
-        });
+        // console.log(result)
+
+        // result.forEach(function (arrayItem) {
+
+
+        //     docFirstName.push(arrayItem.first_name.trim());
+        //     docLastName.push(arrayItem.last_name.trim());
+        //     docUserNames.push(arrayItem.user_name.trim());
+        //     docSpecs.push(arrayItem.spec.trim());
+        //     timings.push(arrayItem.at_hospital.trim());
+
+        // });
+
 
         // console.log(docFirstName);
         res.render("regAndFirstuser", {
-            docFirstName: docFirstName,
-            docLastName: docLastName,
-            docUserNames: docUserNames,
-            docSpecs: docSpecs,
-            timings: timings
+            results: result
         });
     });
 });

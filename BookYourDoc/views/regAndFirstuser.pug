@@ -12,12 +12,12 @@ body
   a(href='') Click here if you already have an account
   br
   br 
-  br
-  br
+  
 
   //- When the application loads store the data lists and them use themto populate
-  if docFirstName && docLastName && docUserNames && docSpecs && timings
-    h1 #{docFirstName} #{docLastName} #{docUserNames} #{docSpecs} #{timings} 
+  if results
+    each data in results
+      h3 #{data}
 
   h1 Book your appointment and register at the same time 
   //- This 
@@ -57,11 +57,11 @@ body
     div
       //- Get from Doc DB
       label(for='specilization') specilization
-      select(class = 'docSpex')
+      select(type='select' onchange="specFunction( '#{results}' )")
         option(selected = true) --select--
-        each docSpec in docSpecs
-          option(value=docSpec) #{docSpec}
-      //- input(type='text' placeholder='specilization' name='specilization')
+        each data in results
+          option(value=data.spec) #{data.spec}
+
     div
       //- Get from Doc DB 
       label(for='doctors') Docotors
