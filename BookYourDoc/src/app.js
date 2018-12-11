@@ -183,20 +183,49 @@ app.get('/', function (req, res) {
 app.get('/allPatientPage', function (req, res) {
     //from here we access database and get all the details of every doctor that's present in DB
     //Should we store it in redis --no not necessary
-    let count = 0;
+
     //first get the doc's data from the DB
     Doctor.find({}).
-    select('user_name spec at_hospital').
+    select('first_name last_name user_name spec at_hospital').
     exec(function (err, result) {
+        let docFirstName=[];
+        let docLastName=[];
+        let docUserNames=[];
+        let docSpecs=[];
+        let timings=[];
         //result is array of userid of all document
         console.log(result);
-        
+        //Result has array of objects
+        result.forEach(function (arrayItem) {
+            console.log(arrayItem.first_name);
+            console.log(arrayItem.last_name);
+            console.log(arrayItem.user_name);
+            console.log(arrayItem.spec);
+            console.log(arrayItem.at_hospital);
+            console.log("--------------------");
+
+            docFirstName.push(arrayItem.first_name.trim());
+            docLastName.push(arrayItem.last_name.trim());
+            docUserNames.push(arrayItem.user_name.trim());
+            docSpecs.push(arrayItem.spec.trim());
+            timings.push(arrayItem.at_hospital.trim());
 
 
+
+        });
+
+        console.log(docFirstName);
+        res.render("regAndFirstuser",{
+            docFirstName: docFirstName,
+            docLastName: docLastName,
+            docUserNames: docUserNames,
+            docSpecs: docSpecs,
+            timings: timings
+        });
     });
 
+    console.log("yo man");
 
-    res.render("regAndFirstuser");
 });
 
 
