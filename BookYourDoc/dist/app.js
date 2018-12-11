@@ -182,10 +182,22 @@ app.get('/', function (req, res) {
     }
 });
 
-//Rout for regLogin
+//9:00AM - 4:00PM    --standard timings of doc
+//Route for regLogin
 //Here before we render the page we send our object that has all the info
 //How should that object be 
 app.get('/allPatientPage', function (req, res) {
+    //from here we access database and get all the details of every doctor that's present in DB
+    //Should we store it in redis --no not necessary
+    var count = 0;
+    //first get the doc's data from the DB
+    Doctor.find({}).select('user_name spec at_hospital').exec(function (err, result) {
+        count++;
+        //result is array of userid of all document
+        console.log(result);
+        console.log(count);
+    });
+
     res.render("regAndFirstuser");
 });
 

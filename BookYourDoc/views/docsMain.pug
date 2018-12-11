@@ -11,6 +11,7 @@ h1  existing user? Log In
           input(type='password' placeholder='password' name='password')
         button(type='submit') Log in 
     h1  else Register 
+    h3 Inputs example: test , test , test , test, test, test, 9:00AM - 4:00PM 
     form(method='POST' action='/doc/reg')
         div
           label(for='last_name') first_name:
@@ -31,7 +32,10 @@ h1  existing user? Log In
         div
             label(for='about') about
             input(type='text' placeholder='about' name='about')
-        div
+        //- 
+        div#options
+
+            //- Add drop down such that we get the 
             label(for='at_hospital') at hospital to and from
             input(type='text' placeholder='at_hospital' name='at_hospital')
 
