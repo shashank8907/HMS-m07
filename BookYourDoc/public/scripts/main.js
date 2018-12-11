@@ -5,6 +5,7 @@ $(document).ready(function () {
     $('.docSpex').change(function() {
         var $this = $(this);
         console.log($this.val());
+        //On change of that 
     });
 
 });

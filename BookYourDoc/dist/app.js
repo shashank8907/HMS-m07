@@ -198,15 +198,10 @@ app.get('/allPatientPage', function (req, res) {
         var docSpecs = [];
         var timings = [];
         //result is array of userid of all document
-        console.log(result);
+        // console.log(result);
         //Result has array of objects
+        console.log(result);
         result.forEach(function (arrayItem) {
-            console.log(arrayItem.first_name);
-            console.log(arrayItem.last_name);
-            console.log(arrayItem.user_name);
-            console.log(arrayItem.spec);
-            console.log(arrayItem.at_hospital);
-            console.log("--------------------");
 
             docFirstName.push(arrayItem.first_name.trim());
             docLastName.push(arrayItem.last_name.trim());
