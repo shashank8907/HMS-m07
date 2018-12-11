@@ -215,12 +215,15 @@ app.get('/allPatientPage', function (req, res) {
             timings.push(arrayItem.at_hospital.trim());
         });
 
-        console.log(docFirstName);
+        // console.log(docFirstName);
+        res.render("regAndFirstuser", {
+            docFirstName: docFirstName,
+            docLastName: docLastName,
+            docUserNames: docUserNames,
+            docSpecs: docSpecs,
+            timings: timings
+        });
     });
-
-    console.log("yo man");
-
-    res.render("regAndFirstuser");
 });
 
 ////REMOVE if not used anywhere in applica
@@ -229,7 +232,6 @@ app.get('/allPatientPage', function (req, res) {
 //     console.log("Hello");
 //     res.render("docsDashboard");
 // });
-
 
 //Route where all doctors visit
 app.get('/allDocsPage', function (req, res) {
