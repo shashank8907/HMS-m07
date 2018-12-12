@@ -1,5 +1,11 @@
 "use strict";
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; //This is the js file that deals with service
+
+
+// var mongoose = require('mongoose');
+
+
 var _mongoose = require("mongoose");
 
 var _mongoose2 = _interopRequireDefault(_mongoose);
@@ -26,12 +32,6 @@ _mongoose2.default.set('debug', true); //Added at 17:57 -- latest
 
 // var path = require('path'); //Core module that is included nodejs
 // var express = require('express')
-
-//This is the js file that deals with service
-
-
-// var mongoose = require('mongoose');
-
 
 //Create Redis client to run commands
 var client = _redis2.default.createClient();
@@ -213,6 +213,7 @@ app.get('/allPatientPage', function (req, res) {
 
 
         // console.log(docFirstName);
+        console.log("@#$" + (typeof result === "undefined" ? "undefined" : _typeof(result)));
         res.render("regAndFirstuser", {
             results: result
         });
@@ -392,6 +393,7 @@ app.post('/doc/logout', function (req, res) {
 });
 
 //Here we include port that we want our application to run on 
+// fuser -k 3000/tcp
 app.listen(3000, function () {
     console.log("The port is listening at 3000");
 });

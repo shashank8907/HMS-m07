@@ -210,6 +210,7 @@ app.get('/allPatientPage', function (req, res) {
 
 
         // console.log(docFirstName);
+        console.log("@#$"+typeof result)
         res.render("regAndFirstuser",{
             results: result
         });
@@ -414,9 +415,11 @@ app.post('/doc/logout', function (req, res) {
     res.clearCookie("user_name_c");
     return res.status(200).redirect('/');
 
+
 });
 
 //Here we include port that we want our application to run on 
+// fuser -k 3000/tcp
 app.listen(3000, function () {
     console.log("The port is listening at 3000");
 });

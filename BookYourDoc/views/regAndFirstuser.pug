@@ -5,9 +5,13 @@ head
   //- //Our CSS
   link(rel='stylesheet', type='text/css', href='/css/mainCss.css')
 
-  //-   src=
+  //-   scripts jQ and external
   script(src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous")
   script(src="/scripts/main.js")
+  //- <script type='text/javascript'> var arrayData =<%-JSON.stringify(myArray)%>
+  
+
+
 body
   a(href='') Click here if you already have an account
   br
@@ -57,10 +61,17 @@ body
     div
       //- Get from Doc DB
       label(for='specilization') specilization
-      select(type='select' onchange="specFunction( '#{results}' )")
-        option(selected = true) --select--
-        each data in results
-          option(value=data.spec) #{data.spec}
+      input(type="hidden", name="hide", onload=`specFunction(${results})`)
+
+      //- //- p(onchange=`specFunction(${results});`)
+      //- //- (type='select', onchange="return specFunction("+[results]+")" )
+      //- select(onchange=`specFunction(${results[0].spec})`) 
+      //-   option(selected = true) --select--
+      //-   option(value) --select--
+      //-   option(selected = true) --select--
+         
+      //-   //- each data in results
+      //-   //-   option(value=data.spec) #{data.spec}
 
     div
       //- Get from Doc DB 
@@ -73,7 +84,7 @@ body
     div
       //- Get from Doc DB
       label(for='Duration') Duration
-      input(type='text' placeholder='Duration of the visit' name='duration')
+      input(type='text' placeholder='Duration of the visit' name='duration') 
     div
       //- store in DB
       label(for='Note') Note
