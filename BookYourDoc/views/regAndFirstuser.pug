@@ -16,12 +16,14 @@ body
   a(href='') Click here if you already have an account
   br
   br 
-  
 
-  //- When the application loads store the data lists and them use themto populate
+  script.
+    var data = JSON.parse('!{JSON.stringify(results)}');
+    console.log(data);
+
   if results
     each data in results
-      h3 #{data}
+      h3 #{data.user_name}
 
   h1 Book your appointment and register at the same time 
   //- This 
@@ -33,7 +35,7 @@ body
     div
       //- store in DB
       label(for='password') Password
-      input(type='password' placeholder='password' name='password')
+      input(type='password' placeholder='password' autocomplete="password" name='password')
     div
       //- store in DB
       label(for='name') name
@@ -41,7 +43,7 @@ body
     div
       //- store in DB
       label(for='email') email
-      input(type='email' placeholder='email' name='email')
+      input(type='email' placeholder='email'   name='email')
     div
       //- store in DB
       label(for='phno') phno
@@ -62,11 +64,8 @@ body
       //- Get from Doc DB
       label(for='specilization') specilization
 
-      //- p(onchange=`specFunction(${results});`)
-      //- (type='select', onchange="return specFunction("+[results]+")" )
-      //- myFunction(this.options[this.selectedIndex].value)
-      select(type='select', onchange="specFunction()" )
-        each data,index in results
+      select(type='select' )
+        each data in results
           option(value=data.spec) #{data.spec}
 
     div
