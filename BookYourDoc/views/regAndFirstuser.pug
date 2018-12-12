@@ -61,17 +61,13 @@ body
     div
       //- Get from Doc DB
       label(for='specilization') specilization
-      input(type="hidden", name="hide", onload=`specFunction(${results})`)
 
-      //- //- p(onchange=`specFunction(${results});`)
-      //- //- (type='select', onchange="return specFunction("+[results]+")" )
-      //- select(onchange=`specFunction(${results[0].spec})`) 
-      //-   option(selected = true) --select--
-      //-   option(value) --select--
-      //-   option(selected = true) --select--
-         
-      //-   //- each data in results
-      //-   //-   option(value=data.spec) #{data.spec}
+      //- p(onchange=`specFunction(${results});`)
+      //- (type='select', onchange="return specFunction("+[results]+")" )
+      //- myFunction(this.options[this.selectedIndex].value)
+      select(type='select', onchange="specFunction()" )
+        each data,index in results
+          option(value=data.spec) #{data.spec}
 
     div
       //- Get from Doc DB 

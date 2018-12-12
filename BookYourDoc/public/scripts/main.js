@@ -1,10 +1,12 @@
-function specFunction(data) {
-    console.log(data);
+function specFunction() {
+
+    console.log("String");
 
 }
 
 $(document).ready(function () {
     console.log("Hello World")
+
 
     $('.docSpex').change(function () {
         var $this = $(this);
